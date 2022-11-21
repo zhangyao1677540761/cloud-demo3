@@ -16,7 +16,6 @@ import java.util.concurrent.TimeUnit;
 public class UseController {
     @Autowired
     UseService useService;
-
     @GetMapping("/use/server")
     public String  Message() throws InterruptedException {
      //   TimeUnit.SECONDS.sleep(RandomUtils.nextInt(5)+1);

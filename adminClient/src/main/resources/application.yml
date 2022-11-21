@@ -1,19 +1,30 @@
 server:
   port: 7999
 
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
 
 spring:
   application:
-    name: adminClient
+    name: Client
 
   boot:
     admin:
       client:
+
         url: http://localhost:8000 #服务地址
+          # 配置用户名
+        username: admin
+          # 配置密码
+        password: admin
         instance:
           service-url: http://localhost:7999 #当前
+
+# 开放端点用于 SpringBoot Admin 的监控
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+logging:
+  file:
+    # 配置生成日志文件名称,admin服务会读取
+    name: D://data/logs/admin-client.log

@@ -1,2 +1,13 @@
 server:
   port: 8000
+spring:
+  application:
+    name: Server
+  security:
+    user:
+      name: admin
+      password: admin
+management:
+  endpoint:
+    health:
+      show-details: always
