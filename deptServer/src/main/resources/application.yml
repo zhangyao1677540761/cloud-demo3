@@ -1,0 +1,27 @@
+server:
+  port: 8001
+
+spring:
+  application:
+    name: deptServer  #服务名称
+
+eureka:
+  client:
+    register-with-eureka: true   #注册到注册中心
+    service-url:
+      defaultZone: http://127.0.0.1:7001/eureka/     #注册中心地址
+  instance:
+    instance-id: ${spring.application.name}-${server.port}    #处理在eureka中的显示
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 2
+    lease-expiration-duration-in-seconds: 4
+
+feign:
+  circuitbreaker:
+    enabled: true    #开启服务降级
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

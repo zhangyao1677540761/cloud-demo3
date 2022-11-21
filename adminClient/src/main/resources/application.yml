@@ -1,0 +1,19 @@
+server:
+  port: 7999
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+spring:
+  application:
+    name: adminClient
+
+  boot:
+    admin:
+      client:
+        url: http://localhost:8000 #服务地址
+        instance:
+          service-url: http://localhost:7999 #当前

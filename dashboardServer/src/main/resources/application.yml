@@ -1,0 +1,33 @@
+server:
+  port: 10086
+
+spring:
+  application:
+    name: dashboardServer
+
+eureka:
+  client:
+    register-with-eureka: true #注册到注册中心
+    service-url:
+      defaultZone: http://127.0.0.1:7001/eureka
+  instance:
+    instance-id: ${spring.application.name}-${server.port}
+    prefer-ip-address: true
+
+hystrix:
+  dashboard:
+    proxy-stream-allow-list: "localhost" #允许进入
+
+turbine:
+  app-config: USESERVER,DEPTSERVER
+  aggregator:
+    cluster-config: default
+  cluster-name-expression: new String("default")
+
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

@@ -1,0 +1,39 @@
+server:
+  port: 10087
+
+eureka:
+  client:
+    service-url: # 配置服务注册地址，与 eureka-server 中暴露地址保持一致
+      defaultZone: http://127.0.0.1:7001/eureka/
+  instance:
+    prefer-ip-address: true  # 是否使用 IP 地址注册，默认 false
+    # instance-id: # 实例 id，服务的唯一标识
+    instance-id: ${spring.application.name}-${server.port}
+    lease-renewal-interval-in-seconds: 5  # 发送心跳的间隔，单位秒，默认 30
+    lease-expiration-duration-in-seconds: 10 # 续约到期时间，单位秒，默认90
+
+spring:
+  application:
+    name: gatewayServer # 为当前商品服务命名
+
+#    网关配置
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true #开启从注册中心动态创建路由的功能
+      routes:                         #路由数组[路由就是指定当请求满足什么条件的时候转到哪个微服务〕
+        - id: deptServer             #当前路由的标识，要求唯一，默认uuid。自定义命名：
+          uri: lb://deptServer #请求最终要被转发到的 订单服务 的地址
+          order: 1                    #路由的优先级,数字越小级别越高
+          predicates:                 #断言(条件判断返回值类型是boolean，就是路由转发要满足的条件)
+            - Path=/dept/**
+            - After=2022-11-21T09:02:05.624+08:00[Asia/Shanghai]
+
+        - id: useServer             #当前路由的标识，要求唯一
+          uri: lb://useServer  #请求最终要被转发到的 产品服务 的地址
+          order: 1                  #路由的优先级,数字越小级别越高
+          predicates:                 #断言(条件判断返回值类型是boolean，就是路由转发要满足的条件)
+            - Path=/use/**   #当请求路径满足Path指定的规则时,才进行路由转发
+
+

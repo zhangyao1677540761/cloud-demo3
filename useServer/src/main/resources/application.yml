@@ -1,0 +1,24 @@
+server:
+  port: 9001
+
+spring:
+  application:
+    name: useServer
+
+eureka:
+  instance:
+    instance-id: useServer-${server.port} #处理在eureka中的显示
+  client:
+    register-with-eureka: true #注册到注册中心
+    service-url:
+      defaultZone: http://127.0.0.1:7001/eureka/
+
+feign:
+  circuitbreaker:
+    enabled: true    #开启服务降级
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*" #显示监控
